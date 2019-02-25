@@ -1,7 +1,7 @@
 
 const phantom = require('phantom');
 
-let createScreenshot = async () => {
+let createScreenshot = async (url) => {
 
     try {
         let instance = await phantom.create();
@@ -16,7 +16,7 @@ let createScreenshot = async () => {
         });
         */
 
-        let status = await page.open('https://www.point-of-reference.com/solutions/referenceedge/');
+        let status = await page.open(url);
         console.log('status - ', status);
 
         let renderResult = await page.renderBase64('JPEG');
