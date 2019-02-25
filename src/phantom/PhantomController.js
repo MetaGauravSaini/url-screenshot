@@ -12,13 +12,13 @@ router.get('/', (req, res) => {
     console.log('inside get route.');
 });
 
-router.post('/capture-screen', async (req, res) => {
+router.post('/capture-screen', (req, res) => {
     let resBody = {};
     console.log('req body - ', req.body);
     let objectsList = JSON.parse(req.body);
     console.log('objectsList - ', objectsList);
 
-    objectsList.forEach(item => {
+    objectsList.forEach(async (item) => {
         let base64Data = await PhantomService.createScreenshotFromUrl(item.url);
         resBody[item.id] = base64Data;
     });
