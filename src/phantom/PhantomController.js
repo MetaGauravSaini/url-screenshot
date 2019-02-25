@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 router.post('/capture-screen', (req, res) => {
     let resBody = {};
     console.log('req body - ', req.body);
-    let objectsList = JSON.parse(req.body);
+    let objectsList = req.body;
     console.log('objectsList - ', objectsList);
 
     objectsList.forEach(async (item) => {
