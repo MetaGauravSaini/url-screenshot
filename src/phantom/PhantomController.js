@@ -14,16 +14,14 @@ router.get('/', (req, res) => {
 
 router.post('/capture-screen', async (req, res) => {
     let resBody = {};
-    console.log('req body - ', req.body);
-    let objectsList = req.body;
-    console.log('objectsList - ', objectsList);
+    let objectsList = req.body['records'];
+    let options = req.body['options'];
 
     await asyncForEach(objectsList, async (item) => {
-        let base64Data = await PhantomService.createScreenshotFromUrl(item.url);
+        let base64Data = await PhantomService.createScreenshotFromUrl(item.url, options['format'], options['width'], options['height']);
         resBody[item.id] = base64Data;
     });
     res.status(200).send(JSON.stringify(resBody));
-    console.log('inside post route.');
 });
 
 async function asyncForEach(array, callback) {
