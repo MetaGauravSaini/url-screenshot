@@ -21,7 +21,7 @@ router.post('/capture-screen', async (req, res) => {
         let base64Data = await PhantomService.createScreenshotFromUrl(item.url, options['format'], options['width'], options['height']);
         resBody[item.id] = base64Data;
     });
-    res.status(200).send(JSON.stringify(resBody));
+    res.status(200).json(resBody);
 });
 
 async function asyncForEach(array, callback) {
