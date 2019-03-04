@@ -4,6 +4,7 @@ const phantom = require('phantom');
 let createScreenshot = async (url, format, w, h) => {
 
     try {
+        url = url.indexOf('http://') === -1 && url.indexOf('https://') === -1 ? 'https://' + url : url;
         let instance = await phantom.create();
         let page = await instance.createPage();
 
@@ -20,7 +21,6 @@ let createScreenshot = async (url, format, w, h) => {
         console.log('status - ', status);
 
         let renderResult = await page.renderBase64(format);
-        //console.log('result - ', renderResult);
 
         await instance.exit();
         return renderResult;
