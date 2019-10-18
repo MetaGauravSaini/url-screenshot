@@ -12,13 +12,18 @@ router.get('/', (req, res) => {
 });
 
 router.post('/capture-screen', async (req, res) => {
-    let resBody = {};
+    let resBody = [];
     let objectsList = JSON.parse(req.body['records']);
     let options = JSON.parse(req.body['options']);
 
     await asyncForEach(objectsList, async (item) => {
         let base64Data = await PhantomService.createScreenshotFromUrl(item.url, options['format'], options['width'], options['height']);
-        resBody[item.id] = base64Data;
+        let itemWrapper = {
+            salesforce_id: item.salesforce_id,
+            url: item.url,
+            thumbnail_data: base64Data
+        };
+        resBody.push(itemWrapper);
     });
     res.status(200).json(resBody);
 });

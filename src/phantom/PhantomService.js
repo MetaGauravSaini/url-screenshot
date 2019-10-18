@@ -20,6 +20,11 @@ let createScreenshot = async (url, format, w, h) => {
         let status = await page.open(url);
         console.log('status - ', status);
 
+        if (status != 'success') {
+            await instance.exit();
+            return 'failed to generate thumbnail';
+        }
+
         let renderResult = await page.renderBase64(format);
 
         await instance.exit();
